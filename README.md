@@ -16,9 +16,9 @@ There are color codes for each password strength category. The CSS styling is pa
 ## JavaScript
 Upon entering text in the text box, the string is parsed for length. If the password is 0 characters, the function returns immediately and does not process further.
 
-There is a number of points determined by the variable *pts*. It is incremented when the password entered passes the length, upper/lower case, special characters, numbers and dictionary test. (One point for each test).
+There is a number of points determined by the variable `pts`. It is incremented when the password entered passes the length, upper/lower case, special characters, numbers and dictionary test. (One point for each test).
 
-Recommendations for password strength are added to the *strengthMessage* variable for every test failed.
+Recommendations for password strength are added to the `strengthMessage` variable for every test failed.
 
 For the API that facilitates the dictionary check, an AJAX call is made to the PHP script.
 
