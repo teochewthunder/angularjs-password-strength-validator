@@ -99,10 +99,12 @@ function($scope)
 
 		if (possibleWords.length > 0) 
 		{
+			$scope.processingDictionaryCheck = true;
+
 			var xmlhttp = new XMLHttpRequest();
-        			xmlhttp.onreadystatechange = function() 
+        	xmlhttp.onreadystatechange = function() 
 			{
-            				if (this.readyState == 4 && this.status == 200) 
+            	if (this.readyState == 4 && this.status == 200) 
 				{console.log(this.responseText);
 					var result = JSON.parse(this.responseText);
 					if (result.wordsFound)
@@ -112,8 +114,10 @@ function($scope)
 						$scope.strengthCode = getCode(pts);
 						return;
 					}
-            				}
-        			};
+            	}
+
+				$scope.processingDictionaryCheck = false;
+        	};
 
 			xmlhttp.open("POST", "validate.php", true);
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -129,5 +133,6 @@ function($scope)
 	$scope.strengthCode = "";
 	$scope.strengthMessage = "";
 	$scope.enteredPassword = "";
+	$scope.processingDictionaryCheck = false;
 }
 );

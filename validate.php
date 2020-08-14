@@ -26,11 +26,15 @@ for ($i = 0; $i < sizeof($words); $i++)
 	$response = curl_exec($curl);
 	//$err = curl_error($curl);
 
-	if (strpos($response, "404") === false) $wordsFound = true;
+	if (strpos($response, "404") === false) 
+	{
+		$wordsFound = true;
+		exit;
+	}
 
 	curl_close($curl);
 }
 
-$result = array("wordsFound" =>$wordsFound);
+$result = array("wordsFound" => $wordsFound);
 echo json_encode($result);
 ?>
