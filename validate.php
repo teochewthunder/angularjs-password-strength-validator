@@ -24,12 +24,11 @@ for ($i = 0; $i < sizeof($words); $i++)
 	));
 
 	$response = curl_exec($curl);
-	//$err = curl_error($curl);
 
 	if (strpos($response, "404") === false) 
 	{
 		$wordsFound = true;
-		exit;
+		break;
 	}
 
 	curl_close($curl);

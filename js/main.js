@@ -105,7 +105,7 @@ function($scope)
         	xmlhttp.onreadystatechange = function() 
 			{
             	if (this.readyState == 4 && this.status == 200) 
-				{console.log(this.responseText);
+				{
 					var result = JSON.parse(this.responseText);
 					if (result.wordsFound)
 					{
@@ -121,7 +121,7 @@ function($scope)
 
 			xmlhttp.open("POST", "validate.php", true);
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlhttp.send("words=" +  JSON.stringify(possibleWords) + "&url=https://od-api.oxforddictionaries.com/api/v1/entries/en/"); 
+			xmlhttp.send("words=" +  JSON.stringify(possibleWords) + "&url=https://od-api.oxforddictionaries.com:443/api/v2/entries/en-us/"); 
 		}
 		else
 		{
