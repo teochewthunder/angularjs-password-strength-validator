@@ -3,6 +3,8 @@ $url = $_POST["url"];
 $words = json_decode($_POST["words"]);
 $wordsFound = false;
 $wordToValidate = "";
+$response = "";
+$word = "";
 
 for ($i = 0; $i < sizeof($words); $i++)
 {
@@ -25,15 +27,18 @@ for ($i = 0; $i < sizeof($words); $i++)
 
 	$response = curl_exec($curl);
 
-	if (strpos($response, "404") === false) 
+	$res = json_decode($response);
+
+	if (array_key_exists("id", $res)) 
 	{
 		$wordsFound = true;
+		$word = $res->id;
 		break;
 	}
 
 	curl_close($curl);
 }
 
-$result = array("wordsFound" => $wordsFound);
+$result = array("wordsFound" => $wordsFound, "word" => $word);
 echo json_encode($result);
 ?>

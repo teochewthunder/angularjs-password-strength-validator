@@ -53,7 +53,39 @@ function($scope)
 		if (pts >= 3) return "excellent";
 	}
 
-	$scope.processPassword=
+	$scope.checkDictionary = 
+	function()
+	{
+		var possibleWords = getWords($scope.enteredPassword);
+
+		$scope.showDictionaryButton = false;
+
+		var xmlhttp = new XMLHttpRequest();
+    	xmlhttp.onreadystatechange = function() 
+		{
+        	if (this.readyState == 4 && this.status == 200) 
+			{
+				var result = JSON.parse(this.responseText);
+				
+				$scope.showDictionaryButton = true;
+
+				if (result.wordsFound)
+				{
+					alert("'" + result.word + "' found in dictionary!");
+				}
+				else
+				{
+					alert("No word found!");
+				}
+        	}
+    	};
+
+		xmlhttp.open("POST", "validate.php", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send("words=" +  JSON.stringify(possibleWords) + "&url=https://od-api.oxforddictionaries.com:443/api/v2/entries/en-us/"); 
+	}
+
+	$scope.processPassword =
 	function()
 	{
 		if ($scope.enteredPassword.length == 0) return;
@@ -68,7 +100,7 @@ function($scope)
 		var pts = 1;
 		$scope.strengthMessage = "";
 
-		if (/[~`!#$%\^&@*+=\-\[\]\\';,/{}|\\":<>\?]/g.test($scope.enteredPassword))
+		if (/[~`!#$%\_\^&@*+=\-\[\]\\';,/{}|\\":<>\?]/g.test($scope.enteredPassword))
 		{
 			pts ++;
 		}
@@ -95,44 +127,17 @@ function($scope)
 			$scope.strengthMessage += "Try including numbers in your password.\n";
 		}
 
-		var possibleWords = getWords($scope.enteredPassword)
+		var possibleWords = getWords($scope.enteredPassword);
 
-		if (possibleWords.length > 0) 
-		{
-			$scope.processingDictionaryCheck = true;
+		$scope.showDictionaryButton = (possibleWords.length > 0);
 
-			var xmlhttp = new XMLHttpRequest();
-        	xmlhttp.onreadystatechange = function() 
-			{
-            	if (this.readyState == 4 && this.status == 200) 
-				{
-					var result = JSON.parse(this.responseText);
-					if (result.wordsFound)
-					{
-						pts --;
-						$scope.strengthMessage += "Avoid using dictionary words.\n";	
-						$scope.strengthCode = getCode(pts);
-						return;
-					}
-            	}
-
-				$scope.processingDictionaryCheck = false;
-        	};
-
-			xmlhttp.open("POST", "validate.php", true);
-			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlhttp.send("words=" +  JSON.stringify(possibleWords) + "&url=https://od-api.oxforddictionaries.com:443/api/v2/entries/en-us/"); 
-		}
-		else
-		{
-			$scope.strengthCode = getCode(pts);
-			return;
-		}
+		$scope.strengthCode = getCode(pts);
+		return;
 	};
 
 	$scope.strengthCode = "";
 	$scope.strengthMessage = "";
 	$scope.enteredPassword = "";
-	$scope.processingDictionaryCheck = false;
+	$scope.showDictionaryButton = false;
 }
 );

@@ -38,16 +38,15 @@
     	<body ng-app="passvalApp">
 		<div ng-controller="passvalCtrl">
 			<label for="txtPassword">Enter your password here: </label>
-			<input type="text" id="txtPassword" ng-change="processPassword()" ng-model="enteredPassword" ng-disabled="processingDictionaryCheck">
-			{{ (processingDictionaryCheck ? "Checking dictionary. Please stand by..." : "") }}
-
+			<input type="text" id="txtPassword" ng-change="processPassword()" ng-model="enteredPassword">
+			<button ng-disabled="!showDictionaryButton" ng-click="checkDictionary()">Dictionary Check</button>
 			<br />
 			<div class="container">
 				<div class="txtStrength color_{{ strengthCode }}">
 					{{ strengthCode }}
 				</div>
 				<div class="txtMessage">
-					{{ strengthMessage }}
+					{{ strengthMessage }}		
 				</div>
 			</div>
 		</div>
