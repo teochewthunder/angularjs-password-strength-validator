@@ -67,8 +67,6 @@ function($scope)
 			{
 				var result = JSON.parse(this.responseText);
 				
-				$scope.showDictionaryButton = true;
-
 				if (result.wordsFound)
 				{
 					alert("'" + result.word + "' found in dictionary!");
