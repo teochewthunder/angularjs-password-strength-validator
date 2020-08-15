@@ -11,7 +11,7 @@ This is a little segment of code that will accept input from a user on the fly, 
 There are placeholders to signal the strength of a password - Weak, Moderate, Strong and Excellent. There is also a text box for filling in the password.
 
 ## CSS
-There are color codes for each password strength category. The CSS styling is part of the templating and is bound to the stength of the password.
+There are color codes for each password strength category. The CSS styling is part of the templating and is bound to the strength of the password.
 
 ## JavaScript
 Upon entering text in the text box, the string is parsed for length. If the password is 0 characters, the function returns immediately and does not process further.
@@ -43,3 +43,4 @@ That array is then parsed. Each time, CURL is used to call the URL of the API.
 
 **Note:** This works in theory, but since this is an asynchronous operation with a large amount of possible transactions, it is also rather inefficient and can be improved.
 
+**Note:** This branch separates the dictionary check from the other checks by use of a button. Also, the API has been updated.
